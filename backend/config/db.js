@@ -4,7 +4,8 @@ const URI = process.env.MONGO_URI
 mongoose.connect(URI,
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true
     },
     (err) => {
     if(!err)
