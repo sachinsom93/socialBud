@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const userModel = require("../models/user")
 const jwt = require('jsonwebtoken');
-
+const requiredLogin = require("../middlewares/requiredLogin")
 // handle validation errors
 const handleErrors = (err) => {
     let errors = { name: "", email: "", password: ""}
@@ -30,7 +30,7 @@ const handleErrors = (err) => {
 
 // funtion to crete json web tokens
 const createToken = (id) => {
-    const SECRET  = process.env.JWT_TOKEN
+    const SECRET = process.env.JWT_SECRET
     const token = jwt.sign({id}, SECRET)
     return token
 }
@@ -72,7 +72,10 @@ router.post("/signin", async (req, res) => {
 
 })
 
-
+router.get("/needLogin", requiredLogin, (req, res) => {
+    console.log(req.user)
+    res.send("Hello")
+})
 
 
 module.exports = router
