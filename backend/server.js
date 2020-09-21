@@ -4,6 +4,9 @@ const dotenv = require("dotenv")
 
 // routers
 const authRouter = require("./routes/auth") 
+const postRouter = require("./routes/post")
+
+
 // config .env
 dotenv.config()
 
@@ -18,6 +21,7 @@ app.use(express.urlencoded({extended: false}))
 // require db and models
 require("./config/db")
 require("./models/user")
+require("./models/post")
 
 
 
@@ -29,6 +33,7 @@ require("./models/user")
 
 // require all routes
 app.use(authRouter)
+app.use(postRouter)
 
 
 // listen app

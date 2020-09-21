@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const userModel = require("../models/user")
 const jwt = require('jsonwebtoken');
-const requiredLogin = require("../middlewares/requiredLogin")
+
+
 // handle validation errors
 const handleErrors = (err) => {
     let errors = { name: "", email: "", password: ""}
@@ -72,10 +73,6 @@ router.post("/signin", async (req, res) => {
 
 })
 
-router.get("/needLogin", requiredLogin, (req, res) => {
-    console.log(req.user)
-    res.send("Hello")
-})
 
 
 module.exports = router
