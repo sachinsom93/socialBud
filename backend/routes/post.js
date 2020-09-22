@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router()
 const requiredLogin = require("../middlewares/requiredLogin")
-const postModel = require("../models/post")
+const postModel = require("../models/post");
+const userModel = require('../models/user');
 
 
 // mongo error handling
@@ -39,6 +40,18 @@ router.post("/create",requiredLogin , async (req, res) => {
 router.get("/posts", async (req, res) => {
     try{
         const posts = await postModel.find().populate("postedBy", "_id name")
+        res.status(200).json({posts})
+    }
+    catch(err){
+        console.log(err)
+    }
+})
+
+
+// get route for my post
+router.get("/myposts", requiredLogin, async (req, res) => {
+    try{
+        const posts = await postModel.find({postedBy: req.user._id}).populate("postedBy", "_id name")
         res.status(200).json({posts})
     }
     catch(err){
