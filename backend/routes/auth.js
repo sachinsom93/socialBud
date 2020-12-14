@@ -48,11 +48,11 @@ router.post("/signup", async (req, res) => {
     try{
         const user = await userModel.create({ name, email, password })
 
-        res.status(201).json(user._id)
+        res.status(201).json({user: user})
     }    
     catch(err){
         const errors = handleErrors(err)
-        res.status(422).json(errors)
+        res.status(422).json({errors: errors})
     }
 })
 
@@ -65,7 +65,7 @@ router.post("/signin", async (req, res) => {
     try{
         const user = await userModel.login(email, password)
         const token = createToken(user._id)
-        res.status(200).json({token: token})
+        res.status(200).json({token: token, user: user})
     }
     catch(err){
         res.status(422).json({error: err.message})

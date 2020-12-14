@@ -13,6 +13,6 @@ mongoose.connect(URI,
         console.log(`MongoDB is connected...`)
     }
     else{
-        console.log(`Error occured during mongo connection: ${err}`)
+        console.log(`Error occured during mongo connection: ${err.message}`)
     }
 })

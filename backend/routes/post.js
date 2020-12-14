@@ -55,7 +55,7 @@ router.get("/myposts", requiredLogin, async (req, res) => {
         res.status(200).json({posts})
     }
     catch(err){
-        console.log(err)
+        res.status(422).json({error: "you must be signed in."})
     }
 })
 module.exports = router
