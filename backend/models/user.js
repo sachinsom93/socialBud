@@ -1,8 +1,13 @@
 const mongoose = require("mongoose")
 const { isEmail } = require("validator")
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs')
+const {ObjectId} = mongoose.Schema.Types
 
 const userSchema = mongoose.Schema({
+    picUrl: {
+        type: String,
+        default: "NO PIC"
+    },
     name: {
         type: String, 
         required: [true, "Please enter a username"],
@@ -19,7 +24,15 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, "Please enter a password"],
         minlength: [6, "Minimum password length is 6 character"]
-    }
+    },
+    following:[{
+        type: ObjectId,
+        ref: "user"
+    }],
+    followers: [{
+        type: ObjectId,
+        ref: "user"
+    }]
 })
 
 // mongo pre hook to hash the password

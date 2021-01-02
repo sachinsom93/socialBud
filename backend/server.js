@@ -1,11 +1,12 @@
 const express = require("express")
 const app = express()
 const dotenv = require("dotenv")
+const path = require("path")
 
 // routers
 const authRouter = require("./routes/auth") 
 const postRouter = require("./routes/post")
-
+const userRouter = require("./routes/user")
 
 // config .env
 dotenv.config()
@@ -34,6 +35,16 @@ require("./models/post")
 // require all routes
 app.use(authRouter)
 app.use(postRouter)
+app.use(userRouter)
+
+
+// production mode 
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static('frontend/build'))
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+    })
+}
 
 
 // listen app
